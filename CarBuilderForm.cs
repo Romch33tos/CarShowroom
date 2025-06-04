@@ -1,4 +1,4 @@
-﻿namespace CarShowroom
+namespace CarShowroom
 {
   public partial class CarBuilderForm : Form, ICarBuilderView
   {
