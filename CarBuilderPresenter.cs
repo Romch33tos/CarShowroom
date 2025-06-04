@@ -1,9 +1,10 @@
-﻿namespace CarShowroom
+namespace CarShowroom
 {
   public class CarBuilderPresenter
   {
     private readonly ICarBuilderView _view;
     private readonly ICarBuilder _builder;
+    private Car _builtCar;
 
     public CarBuilderPresenter(ICarBuilderView view, ICarBuilder builder)
     {
@@ -12,11 +13,13 @@
       _view.BuildCarClicked += OnBuildCarClicked;
     }
 
+    public Car GetBuiltCar() => _builtCar;
+
     private void OnBuildCarClicked(object sender, EventArgs e)
     {
       try
       {
-        var car = _builder
+        _builtCar = _builder
           .SetType(_view.CarType)
           .SetBrand(_view.Brand)
           .SetModel(_view.Model)
@@ -28,11 +31,12 @@
           .SetTransmission(_view.Transmission)
           .Build();
 
-        _view.ShowMessage($"Car built successfully:\n{car}");
+        _view.ShowMessage($"Car built successfully:\n{_builtCar}");
       }
       catch (Exception ex)
       {
         _view.ShowMessage($"Error building car: {ex.Message}");
+        _builtCar = null;
       }
     }
   }
