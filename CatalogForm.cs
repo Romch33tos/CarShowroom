@@ -1,4 +1,4 @@
-﻿namespace CarShowroom
+namespace CarShowroom
 {
   public partial class CatalogForm : Form, ICatalogView
   {
@@ -51,27 +51,12 @@
 
       builderForm.BuildCarClicked += (sender, e) =>
       {
-        try
+        var car = presenter.GetBuiltCar();
+        if (car != null)
         {
-          var car = builder
-              .SetType(builderForm.CarType)
-              .SetBrand(builderForm.Brand)
-              .SetModel(builderForm.Model)
-              .SetYear(builderForm.Year)
-              .SetPrice(builderForm.Price)
-              .SetColor(builderForm.Color)
-              .SetHorsepower(builderForm.Horsepower)
-              .SetEngineType(builderForm.EngineType)
-              .SetTransmission(builderForm.Transmission)
-              .Build();
-
           ((CatalogPresenter)this.Tag).AddNewCar(car);
           FilterChanged?.Invoke(this, EventArgs.Empty);
           builderForm.Close();
-        }
-        catch (Exception ex)
-        {
-          builderForm.ShowMessage($"Error building car: {ex.Message}");
         }
       };
 
@@ -83,7 +68,7 @@
       var orderForm = new OrderForm(selectedCar);
       var orderPresenter = new OrderPresenter(orderForm, Program.Inventory);
       orderForm.ShowDialog(this);
-      
+
       this.Cars = Program.Inventory;
     }
   }
