@@ -1,4 +1,4 @@
-﻿namespace CarShowroom
+namespace CarShowroom
 {
   public interface ICatalogView
   {
